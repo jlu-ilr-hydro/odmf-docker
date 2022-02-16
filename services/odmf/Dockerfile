@@ -25,9 +25,10 @@ ENV DB_USER=db_odmf_user
 ENV DB_PASSWORD=db_password
 ENV DB_NAME=odmf
 
-WORKDIR /srv/odmf
 # Get start script
-RUN wget https://github.com/$SOURCE_REPO_URL/raw/$BRANCH/bin/start.py
+RUN wget https://github.com/${SOURCE_REPO_URL}/raw/${SOURCE_BRANCH}/bin/start.py -O /srv/start-odmf.py
+
+WORKDIR /srv/odmf
 
 
 

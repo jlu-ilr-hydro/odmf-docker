@@ -51,5 +51,6 @@ Start database and a cherrpy server. The server is not configured for SSL, so us
 On first start, the following directories are created:
 
  - instance: all configuration and extra data for ODMF are saved here. The start.py program is used for startup
- - postgres_data: This folder contains the data files from the postgres server
  - data_backup: This folder includes 
+
+The database is stored in a docker volume

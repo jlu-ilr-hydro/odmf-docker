@@ -1,10 +1,9 @@
-# https://testdriven.io/blog/dockerizing-flask-with-postgres-gunicorn-and-nginx/
 version: '3.8'
 
 services:
   web:
     build: ./services/odmf
-    command: python3 /srv/odmf/start-odmf.py
+    command: python3 /srv/start-odmf.py
     env_file:
       - .env
     volumes:
@@ -16,10 +15,11 @@ services:
   db:
     image: postgres:13
     volumes:
-      - ./postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=${DB_USER:-db_user}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-db_passw}
       - POSTGRES_DB=${DB_NAME:-odmf}
-
+volumes:
+  postgres_data:
 
