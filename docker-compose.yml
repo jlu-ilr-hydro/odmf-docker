@@ -12,6 +12,7 @@ services:
       - ${ODMF_PORT}:${ODMF_PORT}
     depends_on:
       - db
+    restart: unless-stopped
   db:
     image: postgres:13
     volumes:
@@ -20,6 +21,7 @@ services:
       - POSTGRES_USER=${DB_USER:-db_user}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-db_passw}
       - POSTGRES_DB=${DB_NAME:-odmf}
+    restart: unless-stopped
 volumes:
   postgres_data:
 
