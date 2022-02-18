@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.3'
 
 services:
   web:
@@ -25,7 +25,6 @@ services:
   db_backup:
     build: ./services/backup
     environment:
-      - BACKUP_TARGET=
       - DB_URL=postgresql://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME
       - BACKUP_ZIP=gzip
     volumes:

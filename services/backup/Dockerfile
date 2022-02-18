@@ -10,8 +10,8 @@ RUN apk --update add postgresql-client
 ENV BACKUP_ZIP=gzip
 ENV DB_URL=postgresql://db_user:db_pw@db:5432/odmf
 
-ADD ./backup.sh /backup.sh
-ADD ./crontab /etc/crontabs/root
+ADD ./*.sh /
+ADD ./crontab /crontab.txt
 
-RUN crond -L /var/backup/crond.log
+ENTRYPOINT ["/entry.sh"]
 
