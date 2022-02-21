@@ -5,8 +5,11 @@ services:
     build: ./services/odmf
     env_file:
       - .env
+    environment:
+      - DB_URL=$DB_TYPE://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME
     volumes:
-      - ./instance/:/srv/odmf/
+      - ./app/:/srv/odmf/
+      - ./backup/:/var/backup
     ports:
       - ${ODMF_PORT}:${ODMF_PORT}
     depends_on:
@@ -23,16 +26,6 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD:-db_passw}
       - POSTGRES_DB=${DB_NAME:-odmf}
     restart: unless-stopped
-  db_backup:
-    build: ./services/backup
-    environment:
-      - DB_URL=postgresql://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME
-      - BACKUP_ZIP=gzip
-    volumes:
-      - ./backup/:/var/backup/
-    depends_on:
-      - db
-    tty: true
 volumes:
   postgres_data:
 
