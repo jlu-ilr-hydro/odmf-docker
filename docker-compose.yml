@@ -16,7 +16,6 @@ services:
       - db
     restart: unless-stopped
     working_dir: /srv/odmf
-    command: python3 /srv/start-odmf.py
   db:
     image: postgres:13
     volumes:
