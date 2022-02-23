@@ -43,6 +43,7 @@ ENV DB_NAME=odmf
 
 # Setup backup, mount /var/backup
 ADD ./*.sh /
+RUN chmod u+x /*.sh
 ADD ./crontab /crontab
 RUN echo "$DB_TYPE://$DB_USER:$DB_PASSWORD@$DB_HOST/$DB_NAME" > /db_url
 WORKDIR /srv/odmf
