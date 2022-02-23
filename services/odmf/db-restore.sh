@@ -1,9 +1,18 @@
-#!/bin/sh
-# Restores the database from a backup made with db_backup.sh
-TABLES=$(odmf tables)
-ODMF_NAME=$(basename $DB_URL)
+#!/bin/bash
+# Restores the database from a backup made with /db-backup.sh
+set -e
+PREFIX=$1
+PREFIX=${PREFIX:-.}
+TABLES=$(odmf db-tables)
+RTABLES=$(tac -s' '<<<$TABLES)
+echo "$PREFIX/[TABLE].[ODMF_NAME].sql.gz"
+for T in $RTABLES
+do
+   echo "$T"
+   psql -d $DB_URL -c "DELETE FROM $T;"
+done
 for T in $TABLES
 do
-  psql -d $DB_URL -c "DELETE FROM $T;"
-  gunzip -c $T.$ODMF_NAME.*.sql.gz | psql -d $DB_URL
+  echo "$PREFIX/$T.*.sql.gz*"
+  gunzip -c $PREFIX/$T.*.sql.gz* | psql -d $DB_URL
 done

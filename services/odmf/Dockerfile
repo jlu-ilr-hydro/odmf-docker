@@ -10,7 +10,7 @@
 
 FROM python:3.9
 MAINTAINER "Philipp Kraft"
-LABEL version="2022.02.22"
+LABEL version="2022.02.23"
 
 RUN  apt-get update && \
      apt-get install -y postgresql-client && \
@@ -19,7 +19,7 @@ RUN  apt-get update && \
 # Disable kernel logs in syslog
 RUN sed 's/module(load="imklog")/#module(load="imklog")/' -i /etc/rsyslog.conf
 
-ENV SOURCE_VERSION=2022.2.22a1
+ENV SOURCE_VERSION=2022.2.23a1
 ENV SOURCE_REPO_URL=jlu-ilr-hydro/odmf
 ENV SOURCE_BRANCH=develop
 ENV SOURCE_ZIP_URL=https://github.com/$SOURCE_REPO_URL/archive/$SOURCE_BRANCH.zip
