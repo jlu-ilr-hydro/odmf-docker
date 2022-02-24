@@ -1,0 +1,10 @@
+# do daily/weekly/monthly maintenance
+# Make sure this has unix line ending (LF) and not windows (CRLF)!
+# min   hour    day     month   weekday command
+@reboot                                 /db-backup.sh 2>&1 | /usr/bin/logger -t odmf
+0       *       *       *       *       TAG=hourly /db-backup.sh 2>&1 | /usr/bin/logger -t odmf
+5       1       *       *       *       psql --dbname=$DB_URL -c 'VACUUM;'  2>&1 | /usr/bin/logger -t odmf
+5       2       *       *       *       TAG=daily /db-backup.sh  2>&1 | /usr/bin/logger -t odmf
+10      3       *       *       6       TAG=weekly /db-backup.sh  2>&1 | /usr/bin/logger -t odmf
+15      4       1       *       *       TAG=monthly /db-backup.sh  2>&1 | /usr/bin/logger -t odmf
+

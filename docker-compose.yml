@@ -5,15 +5,17 @@ services:
     build: ./services/odmf
     env_file:
       - .env
+    environment:
+      - DB_URL=$DB_TYPE://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME
     volumes:
-      - ./instance/:/srv/odmf/
+      - ./app/:/srv/odmf/
+      - ./backup/:/var/backup
     ports:
       - ${ODMF_PORT}:${ODMF_PORT}
     depends_on:
       - db
     restart: unless-stopped
     working_dir: /srv/odmf
-    command: python3 /srv/start-odmf.py
   db:
     image: postgres:13
     volumes:

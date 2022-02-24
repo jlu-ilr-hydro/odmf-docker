@@ -23,7 +23,7 @@ Port for the internal server port. The included docker-compose.yml exposes that 
     ODMF_PORT=8081
 Default timezone
 
-    ODMF_DATETIME_DEFAULT_TIMEZONE=Europe/Berlin
+    ODMF_DEFAULT_TIMEZONE=Europe/Berlin
 Base url
 
     ODMF_ROOT_URL=/test
