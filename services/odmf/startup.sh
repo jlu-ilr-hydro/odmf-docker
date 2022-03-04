@@ -1,7 +1,6 @@
 #!/bin/bash
 
-export DB_URL=$DB_TYPE://$DB_USER:$DB_PASSWORD@$DB_HOST/$DB_NAME
-
+cat /db_url
 # Create the ODMF server
 odmf version
 odmf -vv configure $DB_URL

@@ -19,12 +19,12 @@ RUN  apt-get update && \
 # Disable kernel logs in syslog
 RUN sed 's/module(load="imklog")/#module(load="imklog")/' -i /etc/rsyslog.conf
 
-ENV SOURCE_VERSION=2022.2.23a1
-ENV SOURCE_REPO_URL=jlu-ilr-hydro/odmf
-ENV SOURCE_BRANCH=develop
-ENV SOURCE_ZIP_URL=https://github.com/$SOURCE_REPO_URL/archive/$SOURCE_BRANCH.zip
+ARG SOURCE_VERSION
+ARG SOURCE_REPO_URL
+ARG SOURCE_BRANCH
+ARG SOURCE_ZIP_URL=https://github.com/$SOURCE_REPO_URL/archive/$SOURCE_BRANCH.zip
 
-ENV PIP=/usr/local/bin/pip
+ARG PIP=/usr/local/bin/pip
 
 RUN $PIP install --upgrade pip setuptools wheel
 # Fastest way to install from github
@@ -35,16 +35,12 @@ ENV ODMF_DEFAULT_TIMEZONE=Europe/Berlin
 ENV ODMF_ROOT_URL=/test
 ENV ODMF_ADMIN_PW=test
 
-ENV DB_TYPE=postgres
-ENV DB_HOST=db
-ENV DB_USER=db_odmf_user
-ENV DB_PASSWORD=db_password
-ENV DB_NAME=odmf
+ENV DB_URL=$DB_URL
 
 # Setup backup, mount /var/backup
-ADD ./*.sh /
+COPY ./*.sh /
 RUN chmod u+x /*.sh
-ADD ./crontab /crontab
-RUN echo "$DB_TYPE://$DB_USER:$DB_PASSWORD@$DB_HOST/$DB_NAME" > /db_url
+COPY ./crontab /crontab
+RUN echo "$DB_URL" > /db_url
 WORKDIR /srv/odmf
 ENTRYPOINT ["/startup.sh"]

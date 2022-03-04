@@ -2,11 +2,20 @@ version: '3.3'
 
 services:
   web:
-    build: ./services/odmf
-    env_file:
-      - .env
+    build:
+      context: ./services/odmf
+      args:
+        SOURCE_BRANCH: ${SOURCE_BRANCH}
+        SOURCE_REPO_URL: ${SOURCE_REPO_URL}
+        SOURCE_VERSION: ${SOURCE_VERSION}
+
     environment:
       - DB_URL=$DB_TYPE://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME
+      - ODMF_ADMIN_PW
+      - ODMF_DEFAULT_TIMEZONE
+      - ODMF_NAME
+      - ODMF_PORT
+      - ODMF_ROOT_URL
     volumes:
       - ./app/:/srv/odmf/
       - ./backup/:/var/backup
