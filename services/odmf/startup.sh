@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Change umask to allow group access
+umask 007
+
 cat /db_url
 # Create the ODMF server
 odmf version
