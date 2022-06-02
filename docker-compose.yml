@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.4'
 
 services:
   web:
@@ -8,6 +8,7 @@ services:
         SOURCE_BRANCH: ${SOURCE_BRANCH}
         SOURCE_REPO_URL: ${SOURCE_REPO_URL}
         SOURCE_VERSION: ${SOURCE_VERSION}
+      target: prod
 
     environment:
       - DB_URL=$DB_TYPE://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME

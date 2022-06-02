@@ -27,7 +27,9 @@ Default timezone
 Base url
 
     ODMF_ROOT_URL=/test
+
 Admin password. Pro Tip: Change to something randomly generated
+
     ODMF_ADMIN_PW=test
 
 ### Database settings
@@ -42,15 +44,22 @@ Username, password and database name. Does not really matter as the database is 
     DB_PASSWORD=db_pw
     DB_NAME=odmf
 
-## Usage:
+## Usage for production servers:
 
-Start database and a cherrpy server. The server is not configured for SSL, so use a reverse proxy!
+Start database and a cherrypy server on the `$ODMF_PORT`. The server is not configured for SSL, so use a reverse proxy!
     
     $ docker-compose up -d
 
 On first start, the following directories are created:
 
- - instance: all configuration and extra data for ODMF are saved here. The start.py program is used for startup
- - data_backup: This folder includes 
+ - app: all configuration and extra data for ODMF are saved here. 
+ - backup: Contains database backups
 
 The database is stored in a docker volume
+
+## Development:
+
+For a develop environment, use the docker-compose-dev.yml. Most features are the same as in the production version, but
+the source code is git cloned into another mounted directory, named `src`. And on starting the container, the web server
+is not yet started, but an interactive terminal is created, which can be used to start the webserver (`odmf start`) or
+start an interactive sessions (`odmf interactive`)
