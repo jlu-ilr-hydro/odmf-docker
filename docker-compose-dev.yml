@@ -18,10 +18,7 @@ services:
     build:
       context: ./services/odmf
       args:
-        SOURCE_BRANCH: ${SOURCE_BRANCH}
-        SOURCE_REPO_URL: ${SOURCE_REPO_URL}
-        SOURCE_VERSION: ${SOURCE_VERSION}
-      target: dev
+        SOURCE_URL: ${SOURCE_URL:-odmf}
 
     environment:
       - DB_URL=$DB_TYPE://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME
@@ -39,7 +36,7 @@ services:
       - ${ODMF_PORT}:${ODMF_PORT}
     depends_on:
       - db
-    restart: unless-stopped
+    restart: "no"
     working_dir: /srv/odmf
   db:
     image: postgres:13

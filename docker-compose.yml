@@ -2,14 +2,7 @@ version: '3.4'
 
 services:
   web:
-    build:
-      context: ./services/odmf
-      args:
-        SOURCE_BRANCH: ${SOURCE_BRANCH}
-        SOURCE_REPO_URL: ${SOURCE_REPO_URL}
-        SOURCE_VERSION: ${SOURCE_VERSION}
-      target: prod
-
+    image: odmf:latest
     environment:
       - DB_URL=$DB_TYPE://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME
       - ODMF_ADMIN_PW
@@ -27,7 +20,7 @@ services:
     restart: unless-stopped
     working_dir: /srv/odmf
   db:
-    image: postgres:13
+    image: postgres:14
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
