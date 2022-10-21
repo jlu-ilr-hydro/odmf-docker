@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   web:
-    image: odmf:2022.10.06
+    image: odmf:2022.10.21
     environment:
       - DB_URL=$DB_TYPE://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME
       - ODMF_ADMIN_PW
@@ -20,7 +20,7 @@ services:
     restart: unless-stopped
     working_dir: /srv/odmf
   db:
-    image: postgres:14
+    image: phkraft/odmf-postgres:14
     volumes:
       - postgres_data:/var/lib/postgresql/data/
       - ./backup_pg/:/var/backup/
