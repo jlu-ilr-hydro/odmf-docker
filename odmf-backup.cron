@@ -1,0 +1,6 @@
+# This file should reside in /etc/cron.d
+#M   H     T M W   Befehl
+0    12    * * *           root    /srv/odmf/backup_all.sh noon
+0    0     * * 1,3,5       root    /srv/odmf/backup_all.sh daily1
+0    0     * * 2,4         root    /srv/odmf/backup_all.sh daily2
+0    0     * * 0           root    /srv/odmf/backup_all.sh weekly

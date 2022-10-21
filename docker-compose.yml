@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   web:
-    image: odmf:latest
+    image: odmf:2022.10.06
     environment:
       - DB_URL=$DB_TYPE://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME
       - ODMF_ADMIN_PW
@@ -12,7 +12,7 @@ services:
       - ODMF_ROOT_URL
     volumes:
       - ./app/:/srv/odmf/
-      - ./backup/:/var/backup
+      - ./backup/:/var/backup/
     ports:
       - ${ODMF_PORT}:${ODMF_PORT}
     depends_on:
@@ -23,6 +23,7 @@ services:
     image: postgres:14
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./backup_pg/:/var/backup/
     environment:
       - POSTGRES_USER=${DB_USER:-db_user}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-db_passw}

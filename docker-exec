@@ -11,5 +11,6 @@ if [ -z "$1" ]; then
   echo "sudo ./docker-exec db-edit.sh         # Start an interactive psql terminal to edit the database"
   echo ""
   echo "Permissions: Usually all members of the odmf-... group should have special sudo rights for this script."
+else
+  docker-compose -f $DIR/docker-compose.yml exec web "$@"
 fi
-docker-compose -f $DIR/docker-compose.yml docker-exec web "$1"
