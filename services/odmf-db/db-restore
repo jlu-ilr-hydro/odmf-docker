@@ -2,8 +2,7 @@
 # Restores the database from a backup made with /db-backup
 set -e
 DB_URL="postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@localhost:5432/$POSTGRES_DB"
-PREFIX=$1
-PREFIX=${PREFIX:-.}
+PREFIX=/var/backup/$1
 TABLES=$(</var/backup/tables)
 RTABLES=$(tac -s' '<<<$TABLES)
 echo "$PREFIX/[TABLE].[ODMF_NAME].sql.gz"
