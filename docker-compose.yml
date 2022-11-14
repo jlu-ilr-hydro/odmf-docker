@@ -2,14 +2,7 @@ version: '3.4'
 
 services:
   web:
-    build:
-      context: ./services/odmf
-      args:
-        SOURCE_BRANCH: ${SOURCE_BRANCH}
-        SOURCE_REPO_URL: ${SOURCE_REPO_URL}
-        SOURCE_VERSION: ${SOURCE_VERSION}
-      target: prod
-
+    image: odmf:latest
     environment:
       - DB_URL=$DB_TYPE://$DB_USER:$DB_PASSWORD@db:5432/$DB_NAME
       - ODMF_ADMIN_PW
@@ -19,7 +12,7 @@ services:
       - ODMF_ROOT_URL
     volumes:
       - ./app/:/srv/odmf/
-      - ./backup/:/var/backup
+      - ./backup/:/var/backup/
     ports:
       - ${ODMF_PORT}:${ODMF_PORT}
     depends_on:
@@ -27,9 +20,10 @@ services:
     restart: unless-stopped
     working_dir: /srv/odmf
   db:
-    image: postgres:13
+    image: odmf-db:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./backup_pg/:/var/backup/
     environment:
       - POSTGRES_USER=${DB_USER:-db_user}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-db_passw}

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+DB_URL="postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@localhost:5432/$POSTGRES_DB"
+psql -d "$DB_URL"
