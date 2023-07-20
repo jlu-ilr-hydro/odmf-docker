@@ -9,7 +9,7 @@
 
 FROM python:3.10 AS base
 MAINTAINER "Philipp Kraft"
-LABEL version="2022.10.21"
+LABEL version="2023.07.20"
 
 RUN  apt-get update && apt-get install -y --no-install-recommends apt-utils && \
      apt-get install -y gzip nano git
@@ -34,6 +34,7 @@ RUN chmod u+x /*.sh
 WORKDIR /srv/odmf
 
 RUN pip3 install $SOURCE
+echo $'PS1=\'\[\033[01;32m\]\u@\[\033[01;36m\]odmf:/$ODMF_ROOT_URL\[\033[01;34m\]\w\[\033[00m\]\$ \'' >> ~/.bashrc
 RUN echo 'eval "$(_ODMF_COMPLETE=bash_source odmf)"' >> ~/.bashrc
 ENV TARGET=prod
 ENTRYPOINT ["/startup-prod.sh"]
