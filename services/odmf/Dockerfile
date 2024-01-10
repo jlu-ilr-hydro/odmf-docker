@@ -9,7 +9,7 @@
 
 FROM python:3.10 AS base
 MAINTAINER "Philipp Kraft"
-LABEL version="2023-11-06"
+LABEL version="2024.1.1dev"
 
 RUN  apt-get update && apt-get install -y --no-install-recommends apt-utils && \
      apt-get install -y gzip nano git
