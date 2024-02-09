@@ -7,19 +7,16 @@
 # volumes:
 #   - ./app/:/srv/odmf
 
-FROM python:3.10 AS base
-MAINTAINER "Philipp Kraft"
-LABEL version="2023-11-06"
+FROM python:3.11 AS base
+LABEL version="2024-2-9" org.opencontainers.image.authors="Philipp Kraft"
 
 RUN  apt-get update && apt-get install -y --no-install-recommends apt-utils && \
      apt-get install -y gzip nano git
 
-# Disable kernel logs in syslog
-# RUN sed 's/module(load="imklog")/#module(load="imklog")/' -i /etc/rsyslog.conf
 ENV PIP_ROOT_USER_ACTION=ignore
 ARG PIP_ROOT_USER_ACTION=ignore
 ARG PIP=/usr/local/bin/pip3
-ARG SOURCE=https://github.com/jlu-ilr-hydro/odmf/archive/refs/heads/master.zip
+ARG SOURCE=/var/source/
 RUN mkdir -p /var/source/
 COPY src/ /var/source/
 ENV ODMF_PORT=8081
@@ -28,13 +25,13 @@ ENV ODMF_ROOT_URL=/test
 ENV ODMF_ADMIN_PW=test
 ENV DB_URL=$DB_URL
 
-RUN pip3 install --upgrade pip setuptools wheel
+RUN python3 -m pip install --upgrade pip setuptools wheel 
 
 # Setup backup, mount /var/backup
 COPY ./*.sh /
 RUN chmod u+x /*.sh
 WORKDIR /srv/odmf
-
+RUN --mount=type=cache,target=/root/.cache pip3 install  psycopg2-binary --upgrade
 RUN --mount=type=cache,target=/root/.cache pip3 install $SOURCE --upgrade
 RUN echo 'eval "$(_ODMF_COMPLETE=bash_source odmf)"' >> ~/.bashrc
 ENV TARGET=prod

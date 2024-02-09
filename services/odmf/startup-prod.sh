@@ -5,7 +5,7 @@ umask 007
 # Create the ODMF server
 odmf version
 odmf -vv configure $DB_URL
-odmf -vv db-create
+odmf -vvv db-create
 TABLES=$(odmf db-tables)
 odmf db-test
 # Start odmf
