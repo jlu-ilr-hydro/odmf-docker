@@ -19,3 +19,5 @@ ENV POSTGRES_PASSWORD=db_passw
 ENV POSTGRES_DB=odmf
 
 COPY ./db-* /usr/local/bin/
+RUN chmod u+x /usr/local/bin/*
+
