@@ -4,6 +4,7 @@
 umask 007
 # Create the ODMF server
 odmf version
+odmf npm
 odmf -vv configure $DB_URL
 odmf -vvv db-create
 TABLES=$(odmf db-tables)
